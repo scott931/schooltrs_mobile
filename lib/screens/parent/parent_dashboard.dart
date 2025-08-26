@@ -383,15 +383,15 @@ class _DashboardHome extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.lightSurface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.border,
+          color: AppColors.primary.withOpacity(0.1),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow,
+            color: AppColors.primary.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -431,7 +431,7 @@ class _DashboardHome extends StatelessWidget {
                 Text(
                   subtitle,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.lightOnSurfaceVariant,
+                        color: AppColors.onSurfaceVariant,
                       ),
                   textAlign: TextAlign.center,
                 ),
@@ -447,15 +447,15 @@ class _DashboardHome extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: AppColors.lightSurface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.border,
+          color: AppColors.primary.withOpacity(0.1),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow,
+            color: AppColors.primary.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -501,7 +501,7 @@ class _DashboardHome extends StatelessWidget {
                   Text(
                     '${child.grade} • ${child.school}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.lightOnSurfaceVariant,
+                          color: AppColors.onSurfaceVariant,
                         ),
                   ),
                 ],

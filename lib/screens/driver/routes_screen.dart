@@ -24,7 +24,7 @@ class _RoutesScreenState extends State<RoutesScreen> {
         children: [
           // Route selector
           Container(
-            height: 110,
+            height: 120, // Increased height to prevent overflow
             padding: const EdgeInsets.all(12),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -105,9 +105,10 @@ class _RoutesScreenState extends State<RoutesScreen> {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(10), // Reduced padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 children: [
@@ -138,6 +139,7 @@ class _RoutesScreenState extends State<RoutesScreen> {
                             color: isSelected ? Colors.white : Colors.black,
                           ),
                           overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                         Text(
                           route['status'],
@@ -147,13 +149,14 @@ class _RoutesScreenState extends State<RoutesScreen> {
                                 isSelected ? Colors.white70 : Colors.grey[600],
                           ),
                           overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4), // Reduced spacing
               Text(
                 route['description'],
                 style: TextStyle(
@@ -163,21 +166,25 @@ class _RoutesScreenState extends State<RoutesScreen> {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 4), // Reduced spacing
               Row(
                 children: [
-                  _buildRouteStat(
-                    icon: Icons.location_on,
-                    value: '${route['stops']}',
-                    label: 'Stops',
-                    isSelected: isSelected,
+                  Expanded(
+                    child: _buildRouteStat(
+                      icon: Icons.location_on,
+                      value: '${route['stops']}',
+                      label: 'Stops',
+                      isSelected: isSelected,
+                    ),
                   ),
-                  const SizedBox(width: 12),
-                  _buildRouteStat(
-                    icon: Icons.people,
-                    value: '${route['students']}',
-                    label: 'Students',
-                    isSelected: isSelected,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildRouteStat(
+                      icon: Icons.people,
+                      value: '${route['students']}',
+                      label: 'Students',
+                      isSelected: isSelected,
+                    ),
                   ),
                 ],
               ),
@@ -195,18 +202,23 @@ class _RoutesScreenState extends State<RoutesScreen> {
     required bool isSelected,
   }) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(
           icon,
-          size: 16,
+          size: 14,
           color: isSelected ? Colors.white70 : Colors.grey[600],
         ),
-        const SizedBox(width: 4),
-        Text(
-          '$value $label',
-          style: TextStyle(
-            fontSize: 12,
-            color: isSelected ? Colors.white70 : Colors.grey[600],
+        const SizedBox(width: 2),
+        Flexible(
+          child: Text(
+            '$value $label',
+            style: TextStyle(
+              fontSize: 11,
+              color: isSelected ? Colors.white70 : Colors.grey[600],
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
         ),
       ],
@@ -299,12 +311,13 @@ class _RoutesScreenState extends State<RoutesScreen> {
           ),
         ),
 
-        const SizedBox(height: 12),
+        const SizedBox(height: 8), // Reduced spacing
 
         // Stops list
         Expanded(
           child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: const EdgeInsets.symmetric(
+                horizontal: 12, vertical: 4), // Reduced vertical padding
             itemCount: stops.length,
             itemBuilder: (context, index) {
               final stop = stops[index];
@@ -378,8 +391,8 @@ class _RoutesScreenState extends State<RoutesScreen> {
         statusIcon = Icons.schedule;
     }
 
-         return Card(
-       margin: const EdgeInsets.only(bottom: 8),
+    return Card(
+      margin: const EdgeInsets.only(bottom: 6), // Reduced margin
       child: ListTile(
         leading: Container(
           width: 50,
@@ -432,15 +445,17 @@ class _RoutesScreenState extends State<RoutesScreen> {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 4),
+            const SizedBox(height: 2), // Reduced spacing
             Text(
               stop['address'],
               style: TextStyle(
                 color: Colors.grey[600],
-                fontSize: 14,
+                fontSize: 13, // Slightly smaller font
               ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 2), // Reduced spacing
             Row(
               children: [
                 Icon(
@@ -475,13 +490,22 @@ class _RoutesScreenState extends State<RoutesScreen> {
           ],
         ),
         trailing: stop['status'] == 'Current'
-            ? ElevatedButton(
-                onPressed: () => _arriveAtStop(stop),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+            ? SizedBox(
+                height: 32, // Fixed height
+                child: ElevatedButton(
+                  onPressed: () => _arriveAtStop(stop),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8, vertical: 4), // Reduced padding
+                    minimumSize: const Size(60, 28), // Smaller minimum size
+                  ),
+                  child: const Text(
+                    'Arrive',
+                    style: TextStyle(fontSize: 12), // Smaller font
+                  ),
                 ),
-                child: const Text('Arrive'),
               )
             : null,
         onTap: () => _showStopDetails(stop),

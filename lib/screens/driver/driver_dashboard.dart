@@ -53,7 +53,7 @@ class _DriverDashboardState extends State<DriverDashboard> {
           });
         },
         selectedItemColor: AppColors.primary,
-        unselectedItemColor: AppColors.lightOnSurfaceVariant,
+        unselectedItemColor: AppColors.onSurfaceVariant,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
@@ -335,15 +335,15 @@ class _DashboardHome extends StatelessWidget {
 
           Container(
             decoration: BoxDecoration(
-              color: AppColors.lightSurface,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppColors.border,
+                color: AppColors.primary.withOpacity(0.1),
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.shadow,
+                  color: AppColors.primary.withOpacity(0.1),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -383,7 +383,7 @@ class _DashboardHome extends StatelessWidget {
                           'Route A - Westlands to Riverside',
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: AppColors.lightOnSurfaceVariant,
+                                    color: AppColors.onSurfaceVariant,
                                   ),
                         ),
                         const SizedBox(height: 8),
@@ -522,15 +522,15 @@ class _DashboardHome extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.lightSurface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.border,
+          color: AppColors.primary.withOpacity(0.1),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow,
+            color: AppColors.primary.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -570,7 +570,7 @@ class _DashboardHome extends StatelessWidget {
                 Text(
                   subtitle,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.lightOnSurfaceVariant,
+                        color: AppColors.onSurfaceVariant,
                       ),
                   textAlign: TextAlign.center,
                 ),

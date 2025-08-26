@@ -31,7 +31,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
         children: [
           // Summary cards
           Container(
-            height: 80,
+            height: 120, // Reduced height to prevent overflow
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
@@ -71,7 +71,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
 
           // Filter chips
           Container(
-            height: 40,
+            height: 35, // Reduced height to prevent overflow
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -105,20 +105,20 @@ class _StudentsScreenState extends State<StudentsScreen> {
   }) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(6), // Reduced padding
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               icon,
               color: color,
-              size: 18,
+              size: 16, // Reduced icon size
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 2), // Reduced spacing
             Text(
               count.toString(),
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16, // Reduced font size
                 fontWeight: FontWeight.w700,
                 color: color,
               ),
@@ -126,7 +126,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
             Text(
               title,
               style: TextStyle(
-                fontSize: 10,
+                fontSize: 9, // Reduced font size
                 color: Colors.grey[600],
               ),
               textAlign: TextAlign.center,
@@ -239,8 +239,8 @@ class _StudentsScreenState extends State<StudentsScreen> {
         statusText = 'Unknown';
     }
 
-         return Card(
-       margin: const EdgeInsets.only(bottom: 8),
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
           radius: 25,
