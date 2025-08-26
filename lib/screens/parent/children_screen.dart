@@ -1,71 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../models/student.dart';
 import '../../data/dummy_data.dart';
 import '../../config/theme.dart';
+import '../../providers/auth_provider.dart';
 
 class ChildrenScreen extends StatelessWidget {
   const ChildrenScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final children = dummyStudents.where((s) => s.parentId == '1').toList();
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, child) {
+        final currentUserId = authProvider.user?.id ?? '1';
+        final children =
+            dummyStudents.where((s) => s.parentId == currentUserId).toList();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Children'),
-        centerTitle: true,
-      ),
-      body: children.isEmpty
-          ? const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.family_restroom,
-                    size: 64,
-                    color: Colors.grey,
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('My Children'),
+            centerTitle: true,
+          ),
+          body: children.isEmpty
+              ? const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.family_restroom,
+                        size: 64,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        'No children registered yet',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Contact your school to register your children',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 16),
-                  Text(
-                    'No children registered yet',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Contact your school to register your children',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: children.length,
-              itemBuilder: (context, index) {
-                final child = children[index];
-                return _buildChildCard(context, child);
-              },
-            ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO: Add child registration functionality
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content:
-                  Text('Contact your school to register additional children'),
-            ),
-          );
-        },
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: children.length,
+                  itemBuilder: (context, index) {
+                    final child = children[index];
+                    return _buildChildCard(context, child);
+                  },
+                ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              // TODO: Add child registration functionality
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                      'Contact your school to register additional children'),
+                ),
+              );
+            },
+            backgroundColor: AppColors.primary,
+            child: const Icon(Icons.add, color: Colors.white),
+          ),
+        );
+      },
     );
   }
 
@@ -98,7 +106,7 @@ class ChildrenScreen extends StatelessWidget {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.location_on,
                       size: 16,
                       color: AppColors.primary,

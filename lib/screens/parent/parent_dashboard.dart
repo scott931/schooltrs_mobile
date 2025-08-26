@@ -5,6 +5,10 @@ import '../../providers/auth_provider.dart';
 import '../../models/student.dart';
 import '../../data/dummy_data.dart';
 import '../../config/theme.dart';
+import 'children_screen.dart';
+import 'live_map_screen.dart';
+import 'payments_screen.dart';
+import 'notifications_screen.dart';
 
 class ParentDashboard extends StatefulWidget {
   const ParentDashboard({super.key});
@@ -384,7 +388,7 @@ class _ChildrenScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Children Screen'));
+    return const ChildrenScreen();
   }
 }
 
@@ -393,7 +397,7 @@ class _LiveMapScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Live Map Screen'));
+    return const LiveMapScreen();
   }
 }
 
@@ -402,7 +406,7 @@ class _PaymentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Payments Screen'));
+    return const PaymentsScreen();
   }
 }
 
@@ -411,6 +415,6 @@ class _NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Notifications Screen'));
+    return const ParentNotificationsScreen();
   }
 }

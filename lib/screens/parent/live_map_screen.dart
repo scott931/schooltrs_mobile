@@ -36,7 +36,7 @@ class _LiveMapScreenState extends State<LiveMapScreen> {
         children: [
           // Map placeholder
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Container(
               margin: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -163,10 +163,10 @@ class _LiveMapScreenState extends State<LiveMapScreen> {
             ),
           ),
 
-          // Controls and info
+          // Controls and info - Made scrollable
           Expanded(
-            flex: 1,
-            child: Container(
+            flex: 2,
+            child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
@@ -216,7 +216,7 @@ class _LiveMapScreenState extends State<LiveMapScreen> {
                                   color: AppColors.primary.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Icon(
+                                child: const Icon(
                                   Icons.directions_bus,
                                   color: AppColors.primary,
                                   size: 20,

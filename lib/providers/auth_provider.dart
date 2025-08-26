@@ -36,30 +36,57 @@ class AuthProvider extends ChangeNotifier {
       // Simulate API call
       await Future.delayed(const Duration(seconds: 1));
 
-      // Accept any email/password combination for demo purposes
-      final demoUser = dummyUsers.firstWhere(
-        (u) => u.role == role,
-        orElse: () => User(
-            id: DateTime.now().millisecondsSinceEpoch.toString(),
+      // Demo credentials for testing
+      final demoCredentials = {
+        UserRole.parent: {
+          'email': 'sarah.johnson@email.com',
+          'password': 'parent123',
+          'userId': '1', // This matches the parent ID in dummy data
+        },
+        UserRole.driver: {
+          'email': 'michael.driver@school.com',
+          'password': 'driver123',
+          'userId': '2',
+        },
+      };
+
+      final credentials = demoCredentials[role];
+
+      if (credentials != null &&
+          email == credentials['email'] &&
+          password == credentials['password']) {
+        // Find the user in dummy data
+        final user = dummyUsers.firstWhere(
+          (u) => u.id == credentials['userId'],
+          orElse: () => User(
+            id: credentials['userId']!,
             name: email.split('@')[0] ?? 'Demo User',
             email: email,
             role: role,
             phone: '+254712345678',
-            profileImage: role == UserRole.parent
-                ? 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400'
-                : 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=400'),
-      );
+            profileImage: null,
+          ),
+        );
 
-      _user = demoUser;
+        _user = user;
 
-      // Save to local storage
-      final box = Hive.box(_authBox);
-      await box.put(_userKey, demoUser.toJson());
+        // Debug information
+        print('User authenticated: ${user.name} (ID: ${user.id})');
+        print('User role: ${user.role}');
 
-      _isLoading = false;
-      notifyListeners();
+        // Save to local storage
+        final box = Hive.box(_authBox);
+        await box.put(_userKey, user.toJson());
 
-      return {'success': true};
+        _isLoading = false;
+        notifyListeners();
+
+        return {'success': true};
+      } else {
+        _isLoading = false;
+        notifyListeners();
+        return {'success': false, 'error': 'Invalid email or password'};
+      }
     } catch (error) {
       _isLoading = false;
       notifyListeners();
