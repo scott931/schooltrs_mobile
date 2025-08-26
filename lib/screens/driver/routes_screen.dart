@@ -24,8 +24,8 @@ class _RoutesScreenState extends State<RoutesScreen> {
         children: [
           // Route selector
           Container(
-            height: 120,
-            padding: const EdgeInsets.all(16),
+            height: 110,
+            padding: const EdgeInsets.all(12),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: _getRoutes().length,
@@ -87,7 +87,7 @@ class _RoutesScreenState extends State<RoutesScreen> {
         });
       },
       child: Container(
-        width: 200,
+        width: 180,
         margin: const EdgeInsets.only(right: 12),
         decoration: BoxDecoration(
           color: isSelected ? route['color'] : Colors.white,
@@ -105,27 +105,27 @@ class _RoutesScreenState extends State<RoutesScreen> {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       color: isSelected
                           ? Colors.white.withOpacity(0.2)
                           : route['color'].withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                     child: Icon(
                       Icons.route,
                       color: isSelected ? Colors.white : route['color'],
-                      size: 20,
+                      size: 16,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 6),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,33 +133,37 @@ class _RoutesScreenState extends State<RoutesScreen> {
                         Text(
                           route['name'],
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: isSelected ? Colors.white : Colors.black,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                         Text(
                           route['status'],
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 11,
                             color:
                                 isSelected ? Colors.white70 : Colors.grey[600],
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               Text(
                 route['description'],
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   color: isSelected ? Colors.white70 : Colors.grey[600],
                 ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               Row(
                 children: [
                   _buildRouteStat(
@@ -168,7 +172,7 @@ class _RoutesScreenState extends State<RoutesScreen> {
                     label: 'Stops',
                     isSelected: isSelected,
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 12),
                   _buildRouteStat(
                     icon: Icons.people,
                     value: '${route['students']}',
@@ -217,7 +221,7 @@ class _RoutesScreenState extends State<RoutesScreen> {
       children: [
         // Route header
         Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Row(
             children: [
               Expanded(
@@ -265,7 +269,7 @@ class _RoutesScreenState extends State<RoutesScreen> {
 
         // Quick actions
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
             children: [
               Expanded(
@@ -275,7 +279,7 @@ class _RoutesScreenState extends State<RoutesScreen> {
                   onTap: () => _startNavigation(selectedRoute),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               Expanded(
                 child: _buildActionButton(
                   icon: Icons.people,
@@ -283,7 +287,7 @@ class _RoutesScreenState extends State<RoutesScreen> {
                   onTap: () => _viewStudents(selectedRoute),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               Expanded(
                 child: _buildActionButton(
                   icon: Icons.schedule,
@@ -295,12 +299,12 @@ class _RoutesScreenState extends State<RoutesScreen> {
           ),
         ),
 
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
 
         // Stops list
         Expanded(
           child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             itemCount: stops.length,
             itemBuilder: (context, index) {
               final stop = stops[index];
@@ -374,8 +378,8 @@ class _RoutesScreenState extends State<RoutesScreen> {
         statusIcon = Icons.schedule;
     }
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+         return Card(
+       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: Container(
           width: 50,

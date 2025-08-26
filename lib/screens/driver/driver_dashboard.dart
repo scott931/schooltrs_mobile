@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
-import '../../models/user.dart';
 import '../../config/theme.dart';
+import 'routes_screen.dart';
+import 'students_screen.dart';
+import 'inspection_screen.dart';
+import 'incidents_screen.dart';
 
 class DriverDashboard extends StatefulWidget {
   const DriverDashboard({super.key});
@@ -17,10 +20,10 @@ class _DriverDashboardState extends State<DriverDashboard> {
 
   final List<Widget> _screens = [
     const _DashboardHome(),
-    const _RoutesScreen(),
-    const _StudentsScreen(),
-    const _InspectionScreen(),
-    const _IncidentsScreen(),
+    const RoutesScreen(),
+    const StudentsScreen(),
+    const InspectionScreen(),
+    const IncidentsScreen(),
   ];
 
   @override
@@ -29,8 +32,9 @@ class _DriverDashboardState extends State<DriverDashboard> {
       appBar: AppBar(
         title: const Text('Driver Dashboard'),
         centerTitle: true,
-        backgroundColor: AppColors.secondary,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
+        elevation: 0,
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -48,7 +52,8 @@ class _DriverDashboardState extends State<DriverDashboard> {
             _selectedIndex = index;
           });
         },
-        selectedItemColor: AppColors.secondary,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.lightOnSurfaceVariant,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
@@ -85,30 +90,45 @@ class _DriverDashboardState extends State<DriverDashboard> {
             children: [
               DrawerHeader(
                 decoration: const BoxDecoration(
-                  color: AppColors.secondary,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      AppColors.primary,
+                      AppColors.primaryLight,
+                    ],
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: user?.profileImage != null
-                          ? NetworkImage(user!.profileImage!)
-                          : null,
-                      child: user?.profileImage == null
-                          ? const Icon(Icons.person,
-                              size: 30, color: Colors.white)
-                          : null,
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: user?.profileImage != null
+                            ? NetworkImage(user!.profileImage!)
+                            : null,
+                        child: user?.profileImage == null
+                            ? const Icon(Icons.person,
+                                size: 30, color: Colors.white)
+                            : null,
+                      ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 16),
                     Text(
                       user?.name ?? 'Driver',
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+                    const SizedBox(height: 4),
                     Text(
                       user?.email ?? '',
                       style: const TextStyle(
@@ -224,51 +244,111 @@ class _DashboardHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Welcome card
-          const Card(
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Good Morning, Driver!',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'You have 2 routes scheduled today',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
+          // Welcome card with modern design
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppColors.primary,
+                  AppColors.primaryLight,
                 ],
               ),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withOpacity(0.3),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.directions_bus,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _getGreeting(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'You have 2 routes scheduled today',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Colors.white.withOpacity(0.9),
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 32),
 
-          // Current status
-          const Text(
+          // Current status with modern design
+          Text(
             'Current Status',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
 
-          Card(
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.lightSurface,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: AppColors.border,
+                width: 1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.shadow,
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Row(
@@ -278,7 +358,7 @@ class _DashboardHome extends StatelessWidget {
                     height: 60,
                     decoration: BoxDecoration(
                       color: AppColors.success.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     child: const Icon(
                       Icons.directions_bus,
@@ -291,19 +371,20 @@ class _DashboardHome extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Bus SB-001',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                         const SizedBox(height: 4),
-                        const Text(
+                        Text(
                           'Route A - Westlands to Riverside',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: AppColors.lightOnSurfaceVariant,
+                                  ),
                         ),
                         const SizedBox(height: 8),
                         Container(
@@ -311,15 +392,35 @@ class _DashboardHome extends StatelessWidget {
                               horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(
                             color: AppColors.success.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Text(
-                            'Active',
-                            style: TextStyle(
-                              color: AppColors.success,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: AppColors.success.withOpacity(0.3),
+                              width: 1,
                             ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 8,
+                                height: 8,
+                                decoration: BoxDecoration(
+                                  color: AppColors.success,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                'Active',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.copyWith(
+                                      color: AppColors.success,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -330,37 +431,38 @@ class _DashboardHome extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 32),
 
-          // Quick actions
-          const Text(
+          // Quick actions with modern design
+          Text(
             'Quick Actions',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
 
           Row(
             children: [
               Expanded(
-                child: _buildQuickActionCard(
-                  icon: Icons.route,
+                child: _buildModernQuickActionCard(
+                  context: context,
+                  icon: Icons.route_outlined,
                   title: 'View Route',
                   subtitle: 'See stops',
-                  color: AppColors.secondary,
+                  color: AppColors.primary,
                   onTap: () {},
                 ),
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: _buildQuickActionCard(
-                  icon: Icons.people,
+                child: _buildModernQuickActionCard(
+                  context: context,
+                  icon: Icons.people_outlined,
                   title: 'Students',
                   subtitle: 'Check manifest',
-                  color: AppColors.primary,
+                  color: AppColors.secondary,
                   onTap: () {},
                 ),
               ),
@@ -372,186 +474,111 @@ class _DashboardHome extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _buildQuickActionCard(
-                  icon: Icons.checklist,
+                child: _buildModernQuickActionCard(
+                  context: context,
+                  icon: Icons.checklist_outlined,
                   title: 'Inspection',
                   subtitle: 'Daily check',
-                  color: AppColors.accent,
+                  color: AppColors.info,
                   onTap: () {},
                 ),
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: _buildQuickActionCard(
-                  icon: Icons.warning,
-                  title: 'Report Issue',
-                  subtitle: 'Report incident',
+                child: _buildModernQuickActionCard(
+                  context: context,
+                  icon: Icons.warning_outlined,
+                  title: 'Report',
+                  subtitle: 'Incident',
                   color: AppColors.error,
                   onTap: () {},
                 ),
               ),
             ],
           ),
-
-          const SizedBox(height: 24),
-
-          // Today's schedule
-          const Text(
-            'Today\'s Schedule',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          _buildScheduleCard(
-            time: '07:00 - 07:45',
-            route: 'Route A - Pickup',
-            status: 'Completed',
-            statusColor: AppColors.success,
-          ),
-
-          const SizedBox(height: 12),
-
-          _buildScheduleCard(
-            time: '15:30 - 16:15',
-            route: 'Route A - Dropoff',
-            status: 'Upcoming',
-            statusColor: AppColors.warning,
-          ),
         ],
       ),
     );
   }
 
-  Widget _buildQuickActionCard({
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good Morning, Driver!';
+    } else if (hour < 17) {
+      return 'Good Afternoon, Driver!';
+    } else {
+      return 'Good Evening, Driver!';
+    }
+  }
+
+  Widget _buildModernQuickActionCard({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required String subtitle,
     required Color color,
     required VoidCallback onTap,
   }) {
-    return Card(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 24,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.lightSurface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: AppColors.border,
+          width: 1,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadow,
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-    );
-  }
-
-  Widget _buildScheduleCard({
-    required String time,
-    required String route,
-    required String status,
-    required Color statusColor,
-  }) {
-    return Card(
-      child: ListTile(
-        leading: Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: AppColors.secondary.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: const Icon(
-            Icons.schedule,
-            color: AppColors.secondary,
-          ),
-        ),
-        title: Text(route),
-        subtitle: Text(time),
-        trailing: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: statusColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Text(
-            status,
-            style: TextStyle(
-              color: statusColor,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: color.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: color,
+                    size: 28,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.lightOnSurfaceVariant,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
-  }
-}
-
-// Placeholder screens
-class _RoutesScreen extends StatelessWidget {
-  const _RoutesScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Routes Screen'));
-  }
-}
-
-class _StudentsScreen extends StatelessWidget {
-  const _StudentsScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Students Screen'));
-  }
-}
-
-class _InspectionScreen extends StatelessWidget {
-  const _InspectionScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Inspection Screen'));
-  }
-}
-
-class _IncidentsScreen extends StatelessWidget {
-  const _IncidentsScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Incidents Screen'));
   }
 }

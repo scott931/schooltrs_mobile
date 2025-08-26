@@ -31,8 +31,8 @@ class _StudentsScreenState extends State<StudentsScreen> {
         children: [
           // Summary cards
           Container(
-            height: 100,
-            padding: const EdgeInsets.all(16),
+            height: 80,
+            padding: const EdgeInsets.all(12),
             child: Row(
               children: [
                 Expanded(
@@ -43,7 +43,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
                     icon: Icons.people,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 8),
                 Expanded(
                   child: _buildSummaryCard(
                     title: 'On Bus',
@@ -54,7 +54,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
                     icon: Icons.check_circle,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 8),
                 Expanded(
                   child: _buildSummaryCard(
                     title: 'Absent',
@@ -71,17 +71,17 @@ class _StudentsScreenState extends State<StudentsScreen> {
 
           // Filter chips
           Container(
-            height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            height: 40,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
                 _buildFilterChip('All', _selectedFilter == 'All'),
-                const SizedBox(width: 8),
+                const SizedBox(width: 6),
                 _buildFilterChip('On Bus', _selectedFilter == 'On Bus'),
-                const SizedBox(width: 8),
+                const SizedBox(width: 6),
                 _buildFilterChip('Absent', _selectedFilter == 'Absent'),
-                const SizedBox(width: 8),
+                const SizedBox(width: 6),
                 _buildFilterChip(
                     'Pickup Pending', _selectedFilter == 'Pickup Pending'),
               ],
@@ -105,19 +105,20 @@ class _StudentsScreenState extends State<StudentsScreen> {
   }) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(8),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               icon,
               color: color,
-              size: 24,
+              size: 18,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
             Text(
               count.toString(),
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 18,
                 fontWeight: FontWeight.w700,
                 color: color,
               ),
@@ -125,9 +126,10 @@ class _StudentsScreenState extends State<StudentsScreen> {
             Text(
               title,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: Colors.grey[600],
               ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -180,7 +182,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       itemCount: filteredStudents.length,
       itemBuilder: (context, index) {
         final student = filteredStudents[index];
@@ -237,8 +239,8 @@ class _StudentsScreenState extends State<StudentsScreen> {
         statusText = 'Unknown';
     }
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+         return Card(
+       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
           radius: 25,

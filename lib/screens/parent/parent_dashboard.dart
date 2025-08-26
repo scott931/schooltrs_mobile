@@ -212,55 +212,101 @@ class _DashboardHome extends StatelessWidget {
     final children = dummyStudents.where((s) => s.parentId == '1').toList();
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Welcome card
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Good Morning!',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'You have ${children.length} child${children.length == 1 ? '' : 'ren'} registered',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
+          // Welcome card with modern design
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppColors.primary,
+                  AppColors.primaryLight,
                 ],
               ),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withOpacity(0.3),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.waving_hand,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _getGreeting(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'You have ${children.length} child${children.length == 1 ? '' : 'ren'} registered',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Colors.white.withOpacity(0.9),
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 32),
 
-          // Quick actions
-          const Text(
+          // Quick actions with modern cards
+          Text(
             'Quick Actions',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
 
           Row(
             children: [
               Expanded(
-                child: _buildQuickActionCard(
-                  icon: Icons.map,
+                child: _buildModernQuickActionCard(
+                  context: context,
+                  icon: Icons.map_outlined,
                   title: 'Live Map',
                   subtitle: 'Track buses',
                   color: AppColors.primary,
@@ -269,8 +315,9 @@ class _DashboardHome extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: _buildQuickActionCard(
-                  icon: Icons.payment,
+                child: _buildModernQuickActionCard(
+                  context: context,
+                  icon: Icons.payment_outlined,
                   title: 'Payments',
                   subtitle: 'View history',
                   color: AppColors.secondary,
@@ -280,102 +327,219 @@ class _DashboardHome extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 32),
 
-          // Children status
-          const Text(
-            'Children Status',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
+          // Children status with modern design
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Children Status',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'View All',
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
           ),
 
           const SizedBox(height: 16),
 
-          ...children.map((child) => _buildChildStatusCard(child)),
+          ...children
+              .map((child) => _buildModernChildStatusCard(context, child)),
         ],
       ),
     );
   }
 
-  Widget _buildQuickActionCard({
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good Morning!';
+    } else if (hour < 17) {
+      return 'Good Afternoon!';
+    } else {
+      return 'Good Evening!';
+    }
+  }
+
+  Widget _buildModernQuickActionCard({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required String subtitle,
     required Color color,
     required VoidCallback onTap,
   }) {
-    return Card(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
+    final theme = Theme.of(context);
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.lightSurface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: AppColors.border,
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadow,
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: color.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: color,
+                    size: 28,
+                  ),
                 ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 24,
+                const SizedBox(height: 16),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.lightOnSurfaceVariant,
+                      ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildChildStatusCard(Student child) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: child.profileImage != null
-              ? NetworkImage(child.profileImage!)
-              : null,
-          child: child.profileImage == null ? const Icon(Icons.person) : null,
+  Widget _buildModernChildStatusCard(BuildContext context, Student child) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: AppColors.lightSurface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: AppColors.border,
+          width: 1,
         ),
-        title: Text(child.name),
-        subtitle: Text('${child.grade} • ${child.school}'),
-        trailing: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: AppColors.success.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadow,
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
-          child: const Text(
-            'On Bus',
-            style: TextStyle(
-              color: AppColors.success,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: child.profileImage != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.network(
+                        child.profileImage!,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Icon(
+                      Icons.person,
+                      color: AppColors.primary,
+                      size: 28,
+                    ),
             ),
-          ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    child.name,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${child.grade} • ${child.school}',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.lightOnSurfaceVariant,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppColors.success.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: AppColors.success.withOpacity(0.3),
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: AppColors.success,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    'On Bus',
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: AppColors.success,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
