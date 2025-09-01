@@ -144,7 +144,7 @@ class _DriverSettingsScreenState extends State<DriverSettingsScreen> {
                             fit: BoxFit.cover,
                           ),
                         )
-                      : Icon(
+                      : const Icon(
                           Icons.person,
                           color: AppColors.primary,
                           size: 30,
@@ -176,7 +176,7 @@ class _DriverSettingsScreenState extends State<DriverSettingsScreen> {
                   onPressed: () {
                     // Navigate to edit profile
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.edit,
                     color: AppColors.primary,
                   ),
@@ -355,7 +355,7 @@ class _DriverSettingsScreenState extends State<DriverSettingsScreen> {
             icon: Icons.emergency_outlined,
             title: 'Emergency Contacts',
             subtitle: 'Manage emergency contacts',
-            trailing: Icon(
+            trailing: const Icon(
               Icons.arrow_forward_ios,
               color: AppColors.onSurfaceVariant,
               size: 16,
@@ -369,7 +369,7 @@ class _DriverSettingsScreenState extends State<DriverSettingsScreen> {
             icon: Icons.security_outlined,
             title: 'Privacy Settings',
             subtitle: 'Manage your privacy',
-            trailing: Icon(
+            trailing: const Icon(
               Icons.arrow_forward_ios,
               color: AppColors.onSurfaceVariant,
               size: 16,
@@ -383,7 +383,7 @@ class _DriverSettingsScreenState extends State<DriverSettingsScreen> {
             icon: Icons.backup_outlined,
             title: 'Data Backup',
             subtitle: 'Backup your data',
-            trailing: Icon(
+            trailing: const Icon(
               Icons.arrow_forward_ios,
               color: AppColors.onSurfaceVariant,
               size: 16,
@@ -420,7 +420,7 @@ class _DriverSettingsScreenState extends State<DriverSettingsScreen> {
             icon: Icons.help_outline,
             title: 'Help & Support',
             subtitle: 'Get help and contact support',
-            trailing: Icon(
+            trailing: const Icon(
               Icons.arrow_forward_ios,
               color: AppColors.onSurfaceVariant,
               size: 16,
@@ -434,7 +434,7 @@ class _DriverSettingsScreenState extends State<DriverSettingsScreen> {
             icon: Icons.info_outline,
             title: 'About App',
             subtitle: 'Version 1.0.0',
-            trailing: Icon(
+            trailing: const Icon(
               Icons.arrow_forward_ios,
               color: AppColors.onSurfaceVariant,
               size: 16,
@@ -448,7 +448,7 @@ class _DriverSettingsScreenState extends State<DriverSettingsScreen> {
             icon: Icons.description_outlined,
             title: 'Terms of Service',
             subtitle: 'Read our terms and conditions',
-            trailing: Icon(
+            trailing: const Icon(
               Icons.arrow_forward_ios,
               color: AppColors.onSurfaceVariant,
               size: 16,
@@ -552,7 +552,7 @@ class _DriverSettingsScreenState extends State<DriverSettingsScreen> {
       value: value,
       onChanged: onChanged,
       underline: Container(),
-      icon: Icon(
+      icon: const Icon(
         Icons.arrow_drop_down,
         color: AppColors.primary,
       ),
@@ -561,7 +561,7 @@ class _DriverSettingsScreenState extends State<DriverSettingsScreen> {
           value: item,
           child: Text(
             item,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.primary,
               fontSize: 14,
             ),

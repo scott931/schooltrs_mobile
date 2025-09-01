@@ -133,7 +133,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const SizedBox(height: 32),
 
                   // Next button
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     height: 56,
                     child: ElevatedButton(

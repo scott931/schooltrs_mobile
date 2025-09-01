@@ -221,7 +221,7 @@ class _DashboardHome extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
@@ -341,7 +341,7 @@ class _DashboardHome extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   'View All',
                   style: TextStyle(
                     color: AppColors.primary,
@@ -480,7 +480,7 @@ class _DashboardHome extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     )
-                  : Icon(
+                  : const Icon(
                       Icons.person,
                       color: AppColors.primary,
                       size: 28,

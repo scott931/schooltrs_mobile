@@ -31,7 +31,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
             margin: const EdgeInsets.all(16),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
@@ -305,7 +305,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                       const SizedBox(height: 4),
                       Text(
                         'KES ${amount.toStringAsFixed(0)}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
                           color: AppColors.primary,

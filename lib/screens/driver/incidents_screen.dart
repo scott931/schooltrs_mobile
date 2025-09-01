@@ -61,7 +61,7 @@ class _IncidentsScreenState extends State<IncidentsScreen> {
               ),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.warning,
                     color: AppColors.error,
                     size: 20,
@@ -288,7 +288,7 @@ class _IncidentsScreenState extends State<IncidentsScreen> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: AppColors.secondary),
+              borderSide: const BorderSide(color: AppColors.secondary),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
@@ -443,7 +443,7 @@ class _IncidentsScreenState extends State<IncidentsScreen> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: AppColors.secondary),
+              borderSide: const BorderSide(color: AppColors.secondary),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
@@ -476,7 +476,7 @@ class _IncidentsScreenState extends State<IncidentsScreen> {
                 color: AppColors.warning.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.build,
                 color: AppColors.warning,
                 size: 20,
@@ -493,7 +493,7 @@ class _IncidentsScreenState extends State<IncidentsScreen> {
                 color: AppColors.warning.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
+              child: const Text(
                 'Medium',
                 style: TextStyle(
                   color: AppColors.warning,
@@ -513,7 +513,7 @@ class _IncidentsScreenState extends State<IncidentsScreen> {
                 color: AppColors.error.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.medical_services,
                 color: AppColors.error,
                 size: 20,
@@ -530,7 +530,7 @@ class _IncidentsScreenState extends State<IncidentsScreen> {
                 color: AppColors.error.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
+              child: const Text(
                 'High',
                 style: TextStyle(
                   color: AppColors.error,

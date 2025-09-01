@@ -40,7 +40,7 @@ class _InspectionScreenState extends State<InspectionScreen> {
             color: AppColors.secondary.withOpacity(0.1),
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.checklist,
                   color: AppColors.secondary,
                   size: 24,
@@ -92,7 +92,7 @@ class _InspectionScreenState extends State<InspectionScreen> {
                     const SizedBox(width: 8),
                     Text(
                       '${_inspectionItems.values.where((checked) => checked).length}/${_inspectionItems.length}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: AppColors.secondary,
@@ -108,7 +108,7 @@ class _InspectionScreenState extends State<InspectionScreen> {
                       _inspectionItems.length,
                   backgroundColor: Colors.grey[300],
                   valueColor:
-                      AlwaysStoppedAnimation<Color>(AppColors.secondary),
+                      const AlwaysStoppedAnimation<Color>(AppColors.secondary),
                 ),
               ],
             ),
@@ -152,7 +152,7 @@ class _InspectionScreenState extends State<InspectionScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               borderSide:
-                                  BorderSide(color: AppColors.secondary),
+                                  const BorderSide(color: AppColors.secondary),
                             ),
                           ),
                         ),
